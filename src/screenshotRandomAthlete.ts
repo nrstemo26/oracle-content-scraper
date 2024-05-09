@@ -1,5 +1,7 @@
 import { chromium } from 'playwright';
 import axios from "axios";
+import * as fs from 'fs';
+
 
 function getRandomInt(min: number, max: number) {
     min = Math.ceil(min);
@@ -10,7 +12,24 @@ function getRandomInt(min: number, max: number) {
 async function getRandomAthlete():Promise<string> {
     const response = await axios.get('https://liftoracle.com/api/v1/athletes?pageSize=12000');
     const allAthletes = response.data.data;
-    const randomInt = getRandomInt(0, allAthletes.length);
+    let randomInt;
+    let usedNumbers: number[] = [];
+    
+
+    // Read the used numbers from the file
+    if (fs.existsSync('usedNumbers.txt')) {
+        const data = fs.readFileSync('usedNumbers.txt', 'utf8');
+        usedNumbers = data.split(',').map(Number);
+    }
+
+    do {
+        randomInt = getRandomInt(0, allAthletes.length);
+    } while (usedNumbers.includes(randomInt));
+
+    // Write the used number to the file
+    usedNumbers.push(randomInt);
+    fs.writeFileSync('usedNumbers.txt', usedNumbers.join(','));
+
     return allAthletes[randomInt];
 }
 
@@ -34,15 +53,10 @@ async function getAthleteScreenshot(randomAthlete:string){
 }
 
 export async function getRandomAthleteScreenshot() {
-    // https://liftoracle.com/api/v1/athletes?pageSize=12000
     try{
         const randomAthlete = await getRandomAthlete();
         const screenshot = getAthleteScreenshot(randomAthlete);
     }catch(error){
         console.error(error);
     }
-
-//   const randomAthlete = getRandomAthlete();
-//   const screenshot = getAthleteScreenshot(randomAthlete);
-//   return screenshot;
 }
