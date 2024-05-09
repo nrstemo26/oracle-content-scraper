@@ -2,3 +2,4 @@ node_modules
 /screenshots
 usedMeetNumbers.txt
 usedAthleteNumbers.txt
+.env

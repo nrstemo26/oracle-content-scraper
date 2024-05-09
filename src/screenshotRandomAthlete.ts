@@ -52,12 +52,13 @@ async function getAthleteScreenshot(randomAthlete:string){
 
 }
 
-export async function getRandomAthleteScreenshot() {
+export async function getRandomAthleteScreenshot():Promise<string> {
     try{
         const randomAthlete = await getRandomAthlete();
         const screenshotPath = getAthleteScreenshot(randomAthlete);
         return screenshotPath
     }catch(error){
         console.error(error);
+        return'error';
     }
 }

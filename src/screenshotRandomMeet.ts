@@ -34,7 +34,7 @@ async function getRandomMeet():Promise<string> {
     return allMeets[randomInt];
 }
 
-async function getMeetScreenshot(randomMeet:string){
+async function getMeetScreenshot(randomMeet:string): Promise<string>{
     const browser = await chromium.launch();
     const page = await browser.newPage();
     await page.setViewportSize({ width: 1080, height: 612 });
@@ -53,12 +53,13 @@ async function getMeetScreenshot(randomMeet:string){
 
 }
 
-export async function getRandomMeetScreenshot() {
+export async function getRandomMeetScreenshot():Promise<string> {
     try{
         const randomAthlete = await getRandomMeet();
         const screenshotPath = getMeetScreenshot(randomAthlete);
         return screenshotPath
     }catch(error){
         console.error(error);
+        return 'error'
     }
 }
