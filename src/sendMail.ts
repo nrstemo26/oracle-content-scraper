@@ -17,7 +17,7 @@ export async function sendMail(meetScreenshotPath: string, athleteScreenshotPath
         });
         const mailOptions = {
             from: process.env.EMAIL_USERNAME,
-            to: 'murph@milwaukeebarbell.com',
+            to: ['murph@milwaukeebarbell.com','nate@milwaukeebarbell.com'],
             subject: 'Lift Oracle Screenshots',
             text: 'Here are the random screenshots',
             attachments: [
