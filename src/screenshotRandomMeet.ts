@@ -37,7 +37,7 @@ async function getRandomMeet():Promise<string> {
 async function getMeetScreenshot(randomMeet:string): Promise<string>{
     const browser = await chromium.launch();
     const page = await browser.newPage();
-    await page.setViewportSize({ width: 1080, height: 612 });
+    await page.setViewportSize({ width: 428, height: 926 });
     
     console.log(randomMeet)
     await page.goto(`https://liftoracle.com/meet/${randomMeet}`);

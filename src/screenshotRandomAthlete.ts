@@ -36,7 +36,7 @@ async function getRandomAthlete():Promise<string> {
 async function getAthleteScreenshot(randomAthlete:string){
     const browser = await chromium.launch();
     const page = await browser.newPage();
-    await page.setViewportSize({ width: 1080, height: 612 });
+    await page.setViewportSize({ width: 428, height: 926 });
     
     console.log(randomAthlete)
     await page.goto(`https://liftoracle.com/athlete/${randomAthlete}`);
